@@ -1,0 +1,66 @@
+* {
+  font-family: sans-serif;
+}
+
+body {
+  background-color: #FFFFFF;
+}
+
+.container {
+  max-width: 800px;
+  width: 50%;
+  margin: auto;
+}
+
+.board {
+  border-collapse: collapse;
+}
+
+.cell {
+  text-align: center;
+  border: 1px solid;
+  width: 50px;
+  height: 50px;
+}
+
+.selected {
+  border: 1px solid #6200EE;
+  background-color: #03DAC6;
+}
+
+.constant {
+  font-weight: bold;
+}
+
+.cell:nth-child(3n) {
+  border-right: 3px solid;
+}
+
+.cell:nth-child(3n + 1) {
+  border-left: 3px solid;
+}
+
+.row:nth-child(3n) .cell {
+  border-bottom: 3px solid;
+}
+
+.row:nth-child(3n + 1) .cell {
+  border-top: 3px solid;
+}
+
+.solve_button {
+  margin: 5px;
+}
+
+.clear_button {
+  margin: 5px;
+}
+
+.input_field {
+  margin: 5px;
+}
+
+.warning_text {
+  color: #B00020;
+  font-weight: bold;
+}
