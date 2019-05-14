@@ -117,6 +117,12 @@ impl Board {
             Cell::Constant(_) => {
                 if !self.within_constraints(x, y) {
                     return None;
+                } else if x == self.n - 1 && y == self.n - 1 {
+                    // We have finished.
+                    return Some(Board {
+                        squares: self.squares.to_vec().into_boxed_slice(),
+                        n: self.n,
+                    });
                 }
                 self.solver(x_next, y_next)
             }
