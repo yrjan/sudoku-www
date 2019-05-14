@@ -29,6 +29,18 @@ enum Msg {
     Clear,
     Select(usize, usize),
     CellUpdate(String),
+    KeyDown(web_sys::KeyboardEvent),
+}
+
+fn update_cell(model: &Model, value: Option<u8>) -> Board {
+    if let Some((x, y)) = model.selected {
+        match value {
+            Some(v) => model.board.set(x, y, Cell::Constant(v)),
+            None => model.board.set(x, y, Cell::Empty),
+        }
+    } else {
+        model.board.clone()
+    }
 }
 
 fn update(msg: Msg, model: &mut Model) -> Update<Msg> {
@@ -54,16 +66,22 @@ fn update(msg: Msg, model: &mut Model) -> Update<Msg> {
             }
         }
         Msg::CellUpdate(s) => {
-            if let Some((x, y)) = model.selected {
-                if s == "" {
-                    model.board = model.board.set(x, y, Cell::Empty);
-                } else {
-                    if let Ok(v) = s.parse::<u8>() {
-                        if v > 0 && v as usize <= model.board.n {
-                            model.board = model.board.set(x, y, Cell::Constant(v));
-                        }
-                    }
+            if let Ok(v) = s.parse::<u8>() {
+                if v > 0 && v as usize <= model.board.n {
+                    model.board = update_cell(model, Some(v));
                 }
+            } else if s == "" {
+                model.board = update_cell(model, None);
+            }
+        }
+        Msg::KeyDown(key_event) => {
+            let key = key_event.key();
+            if let Ok(v) = key.parse::<u8>() {
+                if v > 0 && v as usize <= model.board.n {
+                    model.board = update_cell(model, Some(v));
+                }
+            } else if key == "Backspace" || key == "Delete" {
+                model.board = update_cell(model, None);
             }
         }
     }
@@ -162,9 +180,14 @@ fn view(model: &Model) -> El<Msg> {
     ]
 }
 
+fn window_events(_: &Model) -> Vec<seed::dom_types::Listener<Msg>> {
+    vec![keyboard_ev("keydown", Msg::KeyDown)]
+}
+
 #[wasm_bindgen]
 pub fn render() {
     seed::App::build(Model::default(), update, view)
+        .window_events(window_events)
         .finish()
         .run();
 }
