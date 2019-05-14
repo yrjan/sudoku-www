@@ -2,6 +2,8 @@
 
 A basic Sudoku solver using [Rust](https://www.rust-lang.org/) and [Seed](https://github.com/David-OConnor/seed). It compiles to WebAssembly and runs entirely client-side. Seed uses a minimal JavaScript-wrapper to call the WebAssembly.
 
+Example is currently running [here](http://skrimstad.net:8000).
+
 ## Algorithm
 
 This solution uses a simple backtracking algorithm to solve the sudoku. It simply attempts all possible solutions for the board, it backtracks whenever it detects that this cannot be the solution. E.g. when we've placed multiple identical numbers in the current row, column or box.
@@ -15,9 +17,15 @@ It is not efficient at all. I believe the worst case time complexity is O(N^(N^2
 
 ## Building and running
 
+### Getting dependencies
+
+To get the required dependencies you can run:
+
+`cargo build`
+
 ### Building debug
 
-To compile with debug flags:
+To compile the project with debug flags and generate the required files:
 
 `cargo make all`
 
