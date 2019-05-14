@@ -64,3 +64,7 @@ body {
   color: #B00020;
   font-weight: bold;
 }
+
+.author_text {
+  font-size: smaller;
+}

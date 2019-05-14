@@ -175,7 +175,8 @@ fn view(model: &Model) -> El<Msg> {
                 format!("Clear")
             ],
             input_field,
-            p![class!["warning_text"], model.warning]
+            p![class!["warning_text"], model.warning],
+            p![class!["author_text"], "© 2019 Yrjan Skrimstad"]
         ]
     ]
 }
